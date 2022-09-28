@@ -1,0 +1,297 @@
+
+
+https://www.oracle.com/br/database/technologies/xe-downloads.html
+
+
+SQL DDL - 
+
+Create table <table name>
+( <column name> <column type> <size> <null|not null>,
+...
+<column name> <column type> <size> <null|not null>)
+
+ ---- comandos aula
+
+
+Informe o nome do usußrio: system
+Informe a senha: ******
+
+Conectado a:
+Oracle Database 21c Express Edition Release 21.0.0.0.0 - Production
+Version 21.3.0.0.0
+
+
+SQL> create user c##fernando identified by fernando;
+
+Usußrio criado.
+
+
+
+SQL> grant connect, resource to c##fernando;
+
+ConcessÒo bem-sucedida.
+
+SQL> disconnect;
+
+SQL> connect
+Informe o nome do usußrio: c##fernando
+Informe a senha: ******
+Conectado.
+
+
+
+SQL> create table profissao
+  2  (id_profissao number(3) not null,
+  3  nm_profissao varchar(40) null,
+  4  primary key(id_profissao));
+
+Tabela criada.
+
+SQL> Create table Pessoa
+  2  ( id_pessoa number(4),
+  3  id_profissao number(3),
+  4  nm_pessoa varchar(40),
+  5  dt_nasc date,
+  6  ds_apelido varchar(30),
+  7  primary key (id_pessoa),
+  8  foreign key(id_profissao) references Profissao (id_profissao));
+
+Tabela criada.
+
+SQL> desc profissao;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PROFISSAO                              NOT NULL NUMBER(3)
+ NM_PROFISSAO                                       VARCHAR2(40)
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+
+SQL> select table_name from user_tables;
+
+TABLE_NAME
+--------------------------------------------------------------------------------
+PROFISSAO
+PESSOA
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+
+SQL> alter table pessoa add (nm_mae varchar(40) null);
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+ NM_MAE                                             VARCHAR2(40)
+
+SQL> alter table pessoa modify nm_mae varchar(50);
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+ NM_MAE                                             VARCHAR2(50)
+
+SQL> alter table pessoa modify nm_mae not null;
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+ NM_MAE                                    NOT NULL VARCHAR2(50)
+
+SQL> alter table pessoa rename column nm_mae to nome_da_mae;
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+ NOME_DA_MAE                               NOT NULL VARCHAR2(50)
+
+
+SQL> alter table pessoa rename column nome_da_mae to nm_mae;
+
+Tabela alterada.
+
+SQL> alter table pessoa drop column nm_mae;
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+
+SQL> alter table pessoa rename to pessoas;
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ERROR:
+ORA-04043: o objeto pessoa nÒo existe
+
+
+SQL> desc pessoas;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ ID_PROFISSAO                                       NUMBER(3)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(30)
+
+
+SQL> drop table pessoas;
+
+Tabela eliminada.
+
+SQL> select table_name from user_tables;
+
+TABLE_NAME
+--------------------------------------------------------------------------------
+PROFISSAO
+
+SQL> create table pessoa
+  2  (id_pessoa number(4),
+  3  nm_pessoa varchar(40),
+  4  dt_nasc date,
+  5  ds_apelido varchar(40));
+
+Tabela criada.
+
+SQL> alter table pessoa add primary key(id_pessoa);
+
+Tabela alterada.
+
+SQL> alter table pessoa add id_profissao number(3);
+
+Tabela alterada.
+
+
+SQL> alter table pessoa add foreign key(id_profissao) references Profissao (id_profissao);
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(40)
+ ID_PROFISSAO                                       NUMBER(3)
+
+SQL>
+
+
+
+
+SQL> create table tipo_cabelo (id_tipoCabelo number(3), ds_tipoCabelo varchar(40), primary key(id_tipoCabelo));
+
+Tabela criada.
+
+SQL> alter table pessoa add id_tipoCabelo number(3);
+
+Tabela alterada.
+
+SQL> desc pessoa;
+ Nome                                      Nulo?    Tipo
+ ----------------------------------------- -------- ----------------------------
+ ID_PESSOA                                 NOT NULL NUMBER(4)
+ NM_PESSOA                                          VARCHAR2(40)
+ DT_NASC                                            DATE
+ DS_APELIDO                                         VARCHAR2(40)
+ ID_PROFISSAO                                       NUMBER(3)
+ ID_TIPOCABELO                                      NUMBER(3)
+
+SQL> alter table pessoa add foreign key(id_tipocabelo
+  2  ) references Tipo_cabelo(id_tipoCabelo);
+
+Tabela alterada.
+
+
+-------------------- 
+Comandos revisados:
+
+
+
+
+create table Profissao
+( id_profissao number(3) not null,
+nm_profissao varchar(40) null,
+primary key(id_profissao));
+
+
+
+Create table Pessoa
+( id_pessoa number(4),
+id_profissao number(3),
+nm_pessoa varchar(40),
+dt_nasc date,
+ds_apelido varchar(30),
+primary key (id_pessoa),
+foreign key(id_profissao) references Profissao (id_profissao));
+
+
+create user c##fernando identified by fernando;
+
+CREATE TABLE Profissao (
+  id_Profissao NUMERIC(3) NOT NULL AUTO_INCREMENT,
+  nm_profissao VARCHAR(40) NULL,
+  PRIMARY KEY(id_Profissao)
+);
+
+CREATE TABLE Pessoa (
+  id_Pessoa number(4) NOT NULL,
+  id_Profissao number(3) NOT NULL,
+  nm_pessoa VARCHAR(40) NULL,
+  dt_nasc DATE NULL,
+  ds_apelido VARCHAR(30) NULL,
+  PRIMARY KEY(id_Pessoa),
+  FOREIGN KEY(id_Profissao)    REFERENCES Profissao(id_Profissao)
+);
+
+
+
+
